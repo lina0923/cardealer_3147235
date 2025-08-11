@@ -12,7 +12,7 @@ export class CustomerController {
     //de programacion que se este usando
     @Get()
     consultaCustomers() {
-        return "Consulta de clientes realizada correctamente";
+        return this.crearcustomer ;
 }
     @Post()
     crearcustomer() {
