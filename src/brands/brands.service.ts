@@ -57,7 +57,18 @@ return marca;
     return `This action updates a #${id} brand`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} brand`;
+
+  //eliminar un elemnto del arreglo 
+  // por id
+  remove(id: number): string {
+      //filter: retornar un nuevo arreglo 
+      // con elementos que cumplan la 
+      // condicional
+      this.brands = this.brands.filter (
+        function (Brand) {
+          return Brand.id !== id
+        }
+      )
+      return "Elemento eliminado"
   }
 }

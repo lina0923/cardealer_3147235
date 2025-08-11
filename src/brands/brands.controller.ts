@@ -32,6 +32,9 @@ export class BrandsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `Aquí se borrará la brand con el id: $ {id}`;
+    return{
+      "success" : true,
+      "message" : this.BrandsService.remove(+id)
+    }
   }
 }
