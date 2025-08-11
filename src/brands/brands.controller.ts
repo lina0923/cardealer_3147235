@@ -1,24 +1,23 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { BrandsService } from './brands.service';
-import { CreateBrandDto } from './dto/create-brand.dto';
-import { UpdateBrandDto } from './dto/update-brand.dto';
-
 @Controller('brands')
 export class BrandsController {
 
+  constructor(private readonly brandsService: BrandsService) {}
+
   @Post()
-  create() {
-    return "aqui se van a crear las brand";
+  create(@Body() body ) {
+    return this.brandsService.create(body) 
   }
 
   @Get()
   findAll() {
-    return "aqui se van a consltar todas las brand";
+    return this.brandsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return `aqui se va a consultar una brand cuyo id es: ${id}`; 
+    return this.brandsService.findOne(+id)
   }
 
   @Patch(':id')
@@ -27,6 +26,9 @@ export class BrandsController {
   }
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `Aqui se elimina la brand cuyo id es: ${id}`;
+    return {
+      "success": true,
+      "mensaje": this.brandsService.remove(+id)
+    }
   }
 }
