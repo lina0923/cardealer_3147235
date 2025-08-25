@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//Modelos del proyecto 
+
+model brand {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(60) 
+  cars car []
+}
+
+model car {
+    id Int @id @default(autoincrement())
+    plate String @db.VarChar(6)
+    release_date DateTime @db.Date
+    is_available Boolean @default(true)
+    price Decimal @db.Decimal(10,2)
+    //campo de llave foranea 
+    brand_id Int 
+
+
+
+    brand brand @relation(fields: [brand_id], references:[id] )
+}
+
+model camion {
+  id           Int      @id @default(autoincrement())
+  license_plate String   @unique @db.VarChar(10)
+  model        String   @db.VarChar(50)
+  capacity     Int      // Capacidad de carga en kg
+  available    Boolean  @default(true)
+}
+
+model catalogo {
+  id          Int       @id @default(autoincrement())
+  product     String    @db.VarChar(100)
+  description String?   @db.Text
+  price       Decimal   @db.Decimal(10,2)
+}
+
+
+model pedido {
+  id          Int       @id @default(autoincrement())
+  client_name String    @db.VarChar(100)
+  address     String    @db.VarChar(150)
+  total       Decimal   @db.Decimal(10,2)
+  status      String    @db.VarChar(20) // Ej: "nuevo", "enviado", "entregado"
+  envioId     Int?
+}
+
+model envio {
+  id            Int       @id @default(autoincrement())
+  date          DateTime  @db.Date
+  origin        String    @db.VarChar(100)
+  destination   String    @db.VarChar(100)
+  status        String    @db.VarChar(20)
+  conductorId   Int
+  camionId      Int
+}
+
+model conductor {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(100)
+  license     String  @unique @db.VarChar(20)
+  phone       String? @db.VarChar(15)
+  hire_date   DateTime @db.Date
+  is_active   Boolean @default(true)
+}

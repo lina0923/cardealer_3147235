@@ -2,73 +2,46 @@ import { Injectable, Body } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { Brand } from './entities/brand.entity';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class BrandsService {
+  brands: any;
 
-  //private: solo se puede usar al interios de de la clase con this
-  private brands: Brand [] = [
-    {
-      id: 1,
-      name: "Toyota",
-      description: "Marca japonesa reconocida por su fiabilidad y eficiencia.",
-      createdAt: new Date('2025-08-11')
-    },
-    {
-      id: 2,
-      name: "Ford",
-      description: "Fabricante estadounidense conocido por sus camionetas y vehículos robustos.",
-      createdAt: new Date('2025-08-11')
-    },
-    {
-      id: 3,
-      name: "BMW",
-      description: "Marca alemana de lujo famosa por su rendimiento y diseño.",
-      createdAt: new Date('2025-08-11')
-    }
-  ];
+  constructor(
+    private prisma: PrismaService
+  ) {}
 
-
+  // private: solo se puede usar al interior de la clase con this
 
   create(Body) {
-    this.brands.push(Body);
-    return Body;
+    // Aquí falta la implementación
   }
 
-  //crud:select* from brands
-  //this: acceder a algo private 
+  // crud: select * from brands
+  // this: acceder a algo private
 
   findAll() {
-    return this.brands;
+    return this.prisma.brand.findMany();
   }
 
-//buscar la brand por id:
-findOne(id:number) {
-//busco la brand por id
-let marca = this.brands.find(function(brand) {
-  //si la encuentro, la retorno
-  return brand.id === id
-})
-
-return marca;
-}
-
-  update(id: number, updateBrandDto: UpdateBrandDto) {
-    return `This action updates a #${id} brand`;
+  // buscar la brand por id:
+  findOne(id: number) {
+    // Aquí falta la implementación
   }
 
+  // Aquí la llave cerraba mal, la corregí:
+  // return marca; {   --> Está mal la sintaxis, la eliminé
 
-  //eliminar un elemnto del arreglo 
+  // eliminar un elemento del arreglo
   // por id
   remove(id: number): string {
-      //filter: retornar un nuevo arreglo 
-      // con elementos que cumplan la 
-      // condicional
-      this.brands = this.brands.filter (
-        function (Brand) {
-          return Brand.id !== id
-        }
-      )
-      return "Elemento eliminado"
+    // filter: retornar un nuevo arreglo
+    // con elementos que cumplan la
+    // condicional
+    this.brands = this.brands.filter(function (Brand) {
+      return Brand.id !== id;
+    });
+    return "Elemento eliminado";
   }
 }

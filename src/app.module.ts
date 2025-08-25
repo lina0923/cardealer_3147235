@@ -5,12 +5,14 @@ import { CustomersModule } from './customers/customers.module';
 import { VendorsModule } from './vendors/vendors.module';
 import { BrandsModule } from './brands/brands.module';
 import { EnviosModule } from './envios/envios.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { PrismaService } from './prisma/prisma.service';
 
 
 @Module({
-  imports: [CustomersModule, VendorsModule, BrandsModule, EnviosModule],
+  imports: [CustomersModule, VendorsModule, BrandsModule, EnviosModule, PrismaModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
 

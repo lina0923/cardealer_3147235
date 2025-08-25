@@ -16,7 +16,7 @@ export class BrandsController {
 
   @Get()
   findAll() {
-    return this
+    return this.BrandsService.findAll() ;
   }
 
   // Consultar un resource por id
