@@ -1,13 +1,16 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { BrandsService } from './brands.service';
+import { CreateBrandDto } from './dto/create-brand.dto';
+
+
 @Controller('brands')
 export class BrandsController {
 
   constructor(private readonly brandsService: BrandsService) {}
-
+//crear una marca/brand
   @Post()
-  create(@Body() body ) {
-    return this.brandsService.create(body) 
+  create(@Body() newBrand: CreateBrandDto){
+    return this.brandsService.create(newBrand);
   }
 
   @Get()
