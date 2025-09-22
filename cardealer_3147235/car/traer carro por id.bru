@@ -1,0 +1,15 @@
+meta {
+  name: traer carro por id
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3010/cars/2
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
